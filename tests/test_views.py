@@ -5,7 +5,7 @@ from api.storage import DataStore
 BASE_URL = os.getenv('BASE_URL')
 
 class TestTimeLogViews:
-    """Test class for movies endpoints"""
+    """Test class for endpoints"""
     store = DataStore()
 
 

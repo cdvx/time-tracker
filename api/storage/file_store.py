@@ -31,7 +31,8 @@ class DataStore(Util):
     
     def format_project_user(self, user, project):
         activities = self.get_activities()
-        duration = sum([activity['tracked'] for activity in activities if activity['user_id'] == user['id'] and project['id'] == activity['project_id']])
+        duration = sum([activity['tracked'] for activity in activities if activity['user_id']\
+             == user['id'] and project['id'] == activity['project_id']])
 
         return {
             'id':user['id'],
@@ -46,9 +47,14 @@ class DataStore(Util):
             'name': project['name'],
             'users': users
         }
-
+    def active_project(self, project):
+        for user in project['users']:
+            if user['logged'] != '0:00:00':
+                return True
+        return False
 
     def add_projects(self, org):
-        org['projects'] = [ self.format_project(project) for project in self.get_projects()]
+        org['projects'] = list(filter(self.active_project, [ self.format_project(project) for project\
+             in self.get_projects()]))
         org['users'] = [Util.format_user(user) for user in org['users']]
         return org
