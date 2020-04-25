@@ -8,11 +8,60 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
     </head>
-    <body>
+    <body >
+        <div class="container"> </div>
         <div class="container root">
+            <span id='success'>{{ message }}</span>
             {% block content %}
             {% endblock %}
         </div>
-        <footer><div class="footer">designed by <a href="https://github.com/cdvx">@cdvx</a></div></footer>
+        <footer class="container">
+            <div class="message"><span>Get report sent to your email!</span></div>
+            <div class="error"><span id='error'></span></div>
+            <form class="input-group m-3" action="{{ url_for('time_log.home') }}" method="post">
+                <input type="text" id="email-data" class="form-control" placeholder="Enter email address" aria-label="enter email" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" onclick="submitData()" type="button" id="button-addon2">send report</button>
+                </div>
+            </form>
+            
+            <div class="footer">developed by <a href="https://github.com/cdvx">@cdvx</a></div>
+        </footer>
+        <script>
+            var submitData = function(){
+                let data = document.getElementById("email-data").value
+                
+                let validateEmail =(email) => {
+                    var re = /\S+@\S+\.\S+/;
+                    return re.test(email);
+                }
+                let error = !validateEmail(data) ? 'Please enter a valid email address' : null
+                if (error == null){
+                    return fetch('http://127.0.01:5000/', {
+                        method: "POST",
+                        mode: 'cors',
+                        headers: new Headers({'Content-Type': 'application/json'}),//, 'Access-Control-Allow-Origin':'*'}), 
+                        body: JSON.stringify({email: data})}).then(()=>{
+                            notifySuccess()
+                        })
+                } else {
+                    let err = document.getElementById("error");
+                    err.innerHTML = error;
+                    err.style.display = 'block';
+                    setTimeout(()=>{
+                        err.style.display = 'none';
+                    }, 3000)
+                }
+            }
+            var notifySuccess = function(){
+                let success = document.getElementById("success");
+                success.innerHTML = "Email successfully sent!";
+                success.style.display = 'block';
+                setTimeout(()=>{
+                    success.style.display = 'none';
+                }, 5000)
+            }
+            
+        </script>
     </body>
 </html>

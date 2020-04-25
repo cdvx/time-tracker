@@ -6,4 +6,4 @@ app = create_app(AppConfig)
 
 
 if __name__ == '__main__':
-    app.run(host=AppConfig.HOST, port=AppConfig.PORT)
+    app.run(host=AppConfig.HOST, port=5000)

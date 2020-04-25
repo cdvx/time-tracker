@@ -15,6 +15,10 @@ class Config:
     ORGANIZATIONS = os.path.join(os.path.dirname(__file__), 'api/storage', os.getenv('ORGANIZATIONS'))
     PROJECTS = os.path.join(os.path.dirname(__file__), 'api/storage', os.getenv('PROJECTS')) #ACTIVITY
     ACTIVITIES = os.path.join(os.path.dirname(__file__), 'api/storage', os.getenv('ACTIVITIES'))
+    MAIL_SERVER =  os.getenv('HOST', 'localhost')
+    MAIL_PORT = os.getenv('MAIL_PORT', 25)
+    SERVER_NAME = '127.0.0.1:5000'
+    MAIL_USE_SSL = True
 
 
 class DevelopmentConfig(Config):

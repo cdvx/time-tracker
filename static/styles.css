@@ -16,6 +16,19 @@ div.container.root {
     border-top: 1px solid rgb(117, 146, 175);
     border-bottom: 1px solid #DEE2E6;
 }
+#error {
+    display: none;
+    padding: 1.5rem;
+    color: red;
+}
+
+#success {
+    display: none;
+    /* padding: 1.5rem; */
+    color: rgb(6, 146, 99);
+    text-align: center;
+    font-size: larger;
+}
 
 .mt-2{
     margin-top: 1.3rem;
@@ -45,15 +58,40 @@ div.container.root {
 }
 .footer {
     font-style: italic;
-    margin: 3rem;
     text-align: right;
-    position: absolute;
+    /* position: absolute; */
     right: 200px;
     color: #69ace6;
+    margin-top: .9rem;
 }
 .footer a {
     color: rgb(107, 243, 198);;
 }
 .footer a:hover {
     color: rgb(221, 202, 26);;
+}
+.input-group {
+    display: inline-flex;
+    min-width: 200px;
+    /* height: 35px !important; */
+}
+.btn.btn-outline-secondary {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+div.message {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #69ace6;
+}
+footer.container {
+    margin-top: 1rem;
+}
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: fit-content;
+    margin: 3rem;
+    align-items: flex-end;
 }

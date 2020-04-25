@@ -6,6 +6,10 @@ from celery_conf.celery_periodic_scheduler import celery_scheduler
 from config import AppConfig
 from api.utils import Util
 
+from flask import render_template
+from flask_mail import Message
+from main import mail
+
 headers = {
     "App-Token": AppConfig.APP_TOKEN,
     "Auth-Token": AppConfig.AUTH_TOKEN
@@ -43,4 +47,15 @@ def get_daily_activity():
     data = data.json()
 
     Util.write_to_file(data, os.getenv('ACTIVITIES'))
+
+@celery_scheduler.task(name='reset_logs')
+def reset_logs():
+    Util.rest_logs()
+
+@celery_scheduler.task(name='send_email')
+def send_email(email, data, date):
+    msg = Message("Time log report",
+                  recipients=[email])
+    msg.html = render_template('table.html', data=data, date=str(date))
+    mail.send(msg)
 

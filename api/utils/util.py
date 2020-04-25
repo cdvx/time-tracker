@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta, date
 import json
 import os
-import pdfkit
 
 
 class Util:
@@ -43,11 +42,12 @@ class Util:
     def write_to_file(data, file_name):
         with open(os.path.join(os.path.dirname(__file__), '../', 'storage', file_name), 'w') as file:
             json.dump(data, file)
+    
+    @staticmethod
+    def rest_logs():
+        logs_path = os.path.join(os.path.dirname(__file__), '../../logs')
+        for file_name in os.listdir(logs_path):
+            os.system(f'cat /dev/null > {logs_path}/{file_name}')
+            print(f'Log file {file_name} reset!')
 
-    # @staticmethod
-    # def download_report():
-    #     config = pdfkit.configuration(wkhtmltopdf="path_to_exe")
-    #     pdfkit.from_url(
-    #         'http://localhost:5000/',
-    #         os.path.join(os.path.dirname(__file__), f'../../{Util.yesterday()}.pdf'),
-    #         configuration = config)
+

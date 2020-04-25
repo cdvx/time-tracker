@@ -1,4 +1,4 @@
-from config import *
+from config import AppConfig
 from main import create_app, celery_app
 
 app = create_app(config=AppConfig)
