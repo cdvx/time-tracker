@@ -1,0 +1,36 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div>
+    {% for organisation in data  %}
+    <!-- <h2 class="ml-2">{{ organisation.id }}</h2> -->
+
+    <table class="table table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th class="p2" scope="col">Employee Name</th>
+            {% for user in organisation.users  %}
+            <th class="p2" scope="col">{{ user.name }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in organisation.projects %}
+          <tr>
+            <th class="p2" scope="row">{{ project.name }}</th>
+              {% for project_user in project.users  %}
+                {% for user in organisation.users %}
+                  {% if user.id==project_user.id %}
+                  <td class="p2">{{ project_user.logged }}</td>
+                  {% endif %}
+                {% endfor  %}
+              {% endfor  %}
+          </tr>
+          {% endfor  %}
+        </tbody>
+      </table>
+      {% endfor  %}
+</div>
+
+{% endblock %}
