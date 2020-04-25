@@ -30,7 +30,7 @@ div.container.root {
     font-style: italic;
     font-weight: 400;
     text-transform: uppercase;
-    font-size: 30px;
+    font-size: 27px;
     margin-left: 3rem;
     color: #777676;
 }
@@ -42,4 +42,18 @@ div.container.root {
     color: #777676;
     font-size: 20px;
     text-transform: capitalize;
+}
+.footer {
+    font-style: italic;
+    margin: 3rem;
+    text-align: right;
+    position: absolute;
+    right: 200px;
+    color: #69ace6;
+}
+.footer a {
+    color: rgb(107, 243, 198);;
+}
+.footer a:hover {
+    color: rgb(221, 202, 26);;
 }
