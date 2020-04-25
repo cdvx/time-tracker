@@ -1,5 +1,7 @@
 ## Time Tracking Tool
 
+[![Build Status](https://travis-ci.org/cdvx/time-tracker.svg?branch=master)](https://travis-ci.org/cdvx/time-tracker)
+
 Using [Hubstaff V1 API](https://api.hubstaff.com/v1/)
 
 # Prerequisites
