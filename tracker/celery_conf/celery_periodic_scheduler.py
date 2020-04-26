@@ -1,4 +1,9 @@
+"""Module for scheduling configuration"""
+
+# 3rd party libraries
 from celery.schedules import crontab
+
+# local imports
 from tracker.services import celery_scheduler
 
 celery_scheduler.conf.beat_schedule = {
@@ -8,4 +13,3 @@ celery_scheduler.conf.beat_schedule = {
         'schedule': crontab(minute='*')# crontab(minute=1, hour=0),
     }
 }
-
