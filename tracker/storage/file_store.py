@@ -1,9 +1,17 @@
 """Module for DataStore"""
-
+# system libraries
 import json
-from config import AppConfig
 from datetime import datetime, timedelta
+
+
+# 3rd party libraries
+from backports.datetime_fromisoformat import MonkeyPatch
+
+
+# local imports
+from config import AppConfig
 from tracker.utils import Util
+
 
 class DataStore:
     """Class to manage data used by the application"""
@@ -65,7 +73,7 @@ class DataStore:
                   with relevant data
         """
         organisations = self.get_organizations()
-        return [ self.add_projects(org) for org in organisations], Util.yesterday(True)
+        return [ self.add_projects(org) for org in organisations], Util.yesterday(in_words=True)
 
     
     def format_project_user(self, user, project):
@@ -82,8 +90,7 @@ class DataStore:
             dict: structured user dict
         """
         activities = self.get_activities()
-        duration = sum([activity['tracked'] for activity in activities if activity['user_id']\
-             == user['id'] and project['id'] == activity['project_id']])
+        duration = sum([activity['tracked'] for activity in activities if self.valid_activity(activity, user, project)])
 
         return {
             'id':user['id'],
@@ -138,3 +145,29 @@ class DataStore:
              in self.get_projects()]))
         org['users'] = [Util.format_user(user) for user in org['users']]
         return org
+
+    def valid_activity(self, activity, user, project):
+        """
+        Check validity of activity basing on the the ativity
+        timeslot. Valid if it corresponds to yesterday
+
+        Args:
+            activity(dict): current activity in iteration
+            user(dict): current user in iteration
+            project(dict): current project in iteration
+
+        Returns:
+            bool: True if activity is valid else False
+        """
+        date = activity['time_slot']
+        # include datetime.fromisoformat support python 3.7+
+        MonkeyPatch.patch_fromisoformat()
+        activity_date = datetime.fromisoformat(date.replace('Z', '+00:00')).replace(tzinfo=None)
+
+        user_matches_activity = activity['user_id'] == user['id']
+        project_matches_activity = project['id'] == activity['project_id']
+        yesterdays_activity = activity_date >= datetime.combine(Util.yesterday(obj=True), datetime.min.time())
+
+        if user_matches_activity and project_matches_activity and yesterdays_activity:
+            return True
+        return False

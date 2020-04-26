@@ -10,27 +10,33 @@ class Util:
     """Utility class with helper functions"""
 
     @staticmethod
-    def yesterday(in_words=False):
+    def yesterday(in_words=False, obj=False):
         """
         Get yesterday's date
 
         Args:
             in_words(bool): return date in words if True else
                             date object
+            obj(bool): return datetime obj if False
 
         Returns:
-            date: date object if in_words is False
+            str: datetime str if obj is Truw
             str: date str if in_words is True
+            datetime: return datetime object if obj is True
+
         """
-        yesterday = datetime.strftime(datetime.now() - timedelta(1), '%Y-%m-%d')
+        yesterday = datetime.now() - timedelta(1)
         if in_words:
+            yesterday = datetime.strftime(yesterday, '%Y-%m-%d')
             kwargs = {
                 'year': int(yesterday[:4]),
                 'month': int(yesterday[5:7]),
                 'day': int(yesterday[8:10])
             }
             return date(**kwargs).strftime('%A %d %B %Y')
-        return yesterday
+        if obj:
+            return yesterday
+        return datetime.strftime(yesterday, '%Y-%m-%d')
     
     @staticmethod
     def today():
@@ -45,12 +51,12 @@ class Util:
     @staticmethod
     def start_time():
         """
-        Get yesterday's date
+        Get the day beforeyesterday's date
 
         Returns:
-            datetime: formarted datetime object of yesterday's date
+            datetime: formarted datetime object of the day before yesterday
         """
-        return Util.yesterday()
+        return datetime.strftime(datetime.now() - timedelta(2), '%Y-%m-%d')
 
     @staticmethod
     def format_user(user):
