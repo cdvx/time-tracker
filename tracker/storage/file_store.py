@@ -1,9 +1,17 @@
 """Module for DataStore"""
-
+# system libraries
 import json
-from config import AppConfig
 from datetime import datetime, timedelta
+
+
+# 3rd party libraries
+from backports.datetime_fromisoformat import MonkeyPatch
+
+
+# local imports
+from config import AppConfig
 from tracker.utils import Util
+
 
 class DataStore:
     """Class to manage data used by the application"""
@@ -152,6 +160,8 @@ class DataStore:
             bool: True if activity is valid else False
         """
         date = activity['time_slot']
+        # include datetime.fromisoformat support python 3.7+
+        MonkeyPatch.patch_fromisoformat()
         activity_date = datetime.fromisoformat(date.replace('Z', '+00:00')).replace(tzinfo=None)
 
         user_matches_activity = activity['user_id'] == user['id']
@@ -161,4 +171,3 @@ class DataStore:
         if user_matches_activity and project_matches_activity and yesterdays_activity:
             return True
         return False
-
