@@ -6,13 +6,13 @@ from flask import current_app, Response, template_rendered
 
 # Local imports
 from main import create_app
-from api.storage import DataStore
+from tracker.storage import DataStore
 
 # constants
 from config import app_config
 
 @pytest.yield_fixture(scope='session')
-def app_():
+def test_app():
     """
     Setup flask test app, this only gets executed once.
     Args:
@@ -25,7 +25,7 @@ def app_():
     return _app
 
 @pytest.fixture(scope='function')
-def client(app_):
+def client(test_app):
     """
     Setup an app client, this gets executed for each test function.
     Args:
@@ -33,17 +33,17 @@ def client(app_):
     Returns:
         Flask app client
     """
-    yield app_.test_client()
+    yield test_app.test_client()
 
 @pytest.fixture
-def captured_templates(app_):
+def captured_templates(test_app):
     recorded = []
 
     def record(sender, template, context, **extra):
         recorded.append((template, context))
 
-    template_rendered.connect(record, app_)
+    template_rendered.connect(record, test_app)
     try:
         yield recorded
     finally:
-        template_rendered.disconnect(record, app_)
+        template_rendered.disconnect(record, test_app)

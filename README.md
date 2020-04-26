@@ -26,9 +26,11 @@ To run this project locally, you need the following;
 - Project can easily be run later on by running
 > `bash run-api.sh`
 
+- To kill the app and running processes, run
+> `bash stop-app.sh`
+
 - Test the application 
 > Go to [home](http://127.0.0.1:5000/)
-
 
 - Run tests with 
 > `pytest --cov=api`

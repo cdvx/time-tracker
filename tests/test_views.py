@@ -1,7 +1,7 @@
 """Module for testing views"""
 import os
 
-from api.storage import DataStore
+from .conftest import DataStore
 BASE_URL = os.getenv('BASE_URL')
 
 class TestTimeLogViews:

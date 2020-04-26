@@ -1,14 +1,23 @@
 #!/bin/bash
 
 echo "<<<<<<<< stop celery >>>>>>>>>"
-ps auxww | grep 'celery worker' | awk '{print $2}' | xargs kill -9 
-ps auxww | grep 'celery' | awk '{print $2}' | xargs kill -9 
+
+ps auxww | grep 'celery worker' | awk '{print $2}' | xargs kill -9 &
+
+echo "<<<<<<<< stopped worker >>>>>>>>>" 
+ps auxww | grep 'celery beat' | awk '{print $2}' | xargs kill -9 &
+echo "<<<<<<<< stopped beat >>>>>>>>>"
+ps auxww | grep 'celery' | awk '{print $2}' | xargs kill -9 &
+
+rm celerybeat.pid &
+
+echo $(ls -la | grep 'pid')
 
 echo "<<<<<<<< celery down >>>>>>>>>"
 
 echo "<<<<<<<< stop redis >>>>>>>>>"
 
-ps auxww | grep 'redis' | awk '{print $2}' | xargs kill -9
+redis-cli shutdown &
 
 echo "<<<<<<<< redis down >>>>>>>>>"
 
