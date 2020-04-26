@@ -1,9 +1,0 @@
-cd src && /Library/Developer/CommandLineTools/usr/bin/make all
-
-Hint: It's a good idea to run 'make test' ;)
-
-4359:C 25 Apr 2020 19:16:40.416 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-4359:C 25 Apr 2020 19:16:40.416 # Redis version=5.0.9, bits=64, commit=493fc93f, modified=1, pid=4359, just started
-4359:C 25 Apr 2020 19:16:40.416 # Warning: no config file specified, using the default config. In order to specify a config file use src/redis-server /path/to/redis.conf
-4359:M 25 Apr 2020 19:16:40.417 * Increased maximum number of open files to 10032 (it was originally set to 256).
-4359:M 25 Apr 2020 19:16:40.417 # Could not create server TCP listening socket *:6379: bind: Address already in use

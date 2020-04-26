@@ -10,7 +10,7 @@ install:
     - pip install coveralls
 
 script:
-    - pytest --cov=api
+    - pytest --cov=tracker
 
 after_success:
     - coveralls

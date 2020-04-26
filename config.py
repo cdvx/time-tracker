@@ -1,7 +1,9 @@
 """Module for configuration"""
 
+#system libraries
 import os
 import sys
+
 
 class Config:
     """Base Config class"""
@@ -11,10 +13,10 @@ class Config:
     AUTH_TOKEN = os.getenv('AUTH_TOKEN')
     CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
     CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
-    REDIS_URL = os.getenv('REDIS_URL', default='redis://localhost:6379/0')
-    ORGANIZATIONS = os.path.join(os.path.dirname(__file__), 'api/storage', os.getenv('ORGANIZATIONS'))
-    PROJECTS = os.path.join(os.path.dirname(__file__), 'api/storage', os.getenv('PROJECTS')) #ACTIVITY
-    ACTIVITIES = os.path.join(os.path.dirname(__file__), 'api/storage', os.getenv('ACTIVITIES'))
+    REDIS_URL = os.getenv('REDIS_URL')
+    ORGANIZATIONS = os.path.join(os.path.dirname(__file__), 'tracker/storage', os.getenv('ORGANIZATIONS'))
+    PROJECTS = os.path.join(os.path.dirname(__file__), 'tracker/storage', os.getenv('PROJECTS')) #ACTIVITY
+    ACTIVITIES = os.path.join(os.path.dirname(__file__), 'tracker/storage', os.getenv('ACTIVITIES'))
     MAIL_SERVER =  os.getenv('HOST', 'localhost')
     MAIL_PORT = os.getenv('MAIL_PORT', 25)
     SERVER_NAME = '127.0.0.1:5000'
