@@ -67,7 +67,7 @@ def get_daily_activity():
     API_URL = os.getenv('API_ACTIVITIES')
 
     start_time = str(Util.start_time())
-    stop_time = str(Util.today())
+    stop_time = str(Util.yesterday())
 
     data= requests.get(f'{API_URL}?start_time={start_time}&stop_time={stop_time}', headers=headers)
     data = data.json()
