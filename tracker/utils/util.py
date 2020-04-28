@@ -58,22 +58,6 @@ class Util:
         """
         return datetime.strftime(datetime.now() - timedelta(2), '%Y-%m-%d')
 
-    @staticmethod
-    def format_user(user):
-        """
-        Structure the user object and keep only required
-        attributes.
-
-        Args:
-            user(dict): current user dict in interation
-
-        Returns:
-            dict: formarted user dict
-        """
-        return {
-            'id': user['id'],
-            'name': user['name'],
-        }
 
     @staticmethod
     def open_file(file_name_path):

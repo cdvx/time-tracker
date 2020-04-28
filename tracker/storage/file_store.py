@@ -48,8 +48,9 @@ class DataStore:
             list: results list of users(s)
         """
         users = []
+        activity_users = set([activity['user_id'] for activity in self.get_activities()])
         for organization in self.get_organizations():
-            users += [user for user in organization['users']]
+            users += [user for user in organization['users'] if user['id'] in activity_users]
         return users
 
     def get_activities(self):
@@ -73,7 +74,7 @@ class DataStore:
                   with relevant data
         """
         organisations = self.get_organizations()
-        return [ self.add_projects(org) for org in organisations], Util.yesterday(in_words=True)
+        return [ self.add_projects(org) for org in organisations ], Util.yesterday(in_words=True)
 
     
     def format_project_user(self, user, project):
@@ -130,6 +131,23 @@ class DataStore:
                 return True
         return False
 
+    @staticmethod
+    def format_user(user):
+        """
+        Structure the user object and keep only required
+        attributes.
+
+        Args:
+            user(dict): current user dict in interation
+
+        Returns:
+            dict: formarted user dict
+        """
+        return {
+            'id': user['id'],
+            'name': user['name'],
+        }
+
     def add_projects(self, org):
         """
         Add active projects to the organization object
@@ -143,7 +161,7 @@ class DataStore:
         """
         org['projects'] = list(filter(self.active_project, [ self.format_project(project) for project\
              in self.get_projects()]))
-        org['users'] = [Util.format_user(user) for user in org['users']]
+        org['users'] = [DataStore.format_user(user) for user in self.get_users()]
         return org
 
     def valid_activity(self, activity, user, project):
@@ -166,7 +184,7 @@ class DataStore:
 
         user_matches_activity = activity['user_id'] == user['id']
         project_matches_activity = project['id'] == activity['project_id']
-        yesterdays_activity = activity_date >= datetime.combine(Util.yesterday(obj=True), datetime.min.time())
+        yesterdays_activity = activity_date >= datetime.combine(Util.yesterday(obj=True), datetime.max.time())
 
         if user_matches_activity and project_matches_activity and yesterdays_activity:
             return True

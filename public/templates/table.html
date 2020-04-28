@@ -10,9 +10,13 @@
         <thead class="thead-light">
           <tr>
             <th class="p2" scope="col">Employee Name</th>
-            {% for user in organisation.users  %}
-            <th class="p2" scope="col">{{ user.name }}</th>
-            {% endfor %}
+            {% if organisation.projects | length == 0 %}
+              <th class="p2" scope="col">No user worked on {{date}}</th>
+            {% else %}
+              {% for user in organisation.users  %}
+              <th class="p2" scope="col">{{ user.name }}</th>
+              {% endfor %}
+            {% endif %}
           </tr>
         </thead>
         <tbody>
