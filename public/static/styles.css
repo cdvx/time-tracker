@@ -8,7 +8,9 @@ div.container.root {
     padding: 2rem;
     background: #d1e9ff;
     border-radius: 5px;
-    max-width: 700px;
+    width: 700px;
+    min-width: 700px;
+    max-width: fit-content;
 
 }
 
@@ -49,7 +51,7 @@ div.container.root {
 .font-italic {
     font-style: italic;
     font-weight: 400;
-    text-transform: uppercase;
+    text-transform: initial;
     font-size: 27px;
     margin-left: 3rem;
     color: #777676;
@@ -57,6 +59,7 @@ div.container.root {
 .font-italic strong {
     font-size: 36px;
     color: #13043a;
+    text-transform: uppercase;
 }
 .font-italic small {
     color: #777676;

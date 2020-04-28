@@ -11,8 +11,6 @@ ps auxww | grep 'celery' | awk '{print $2}' | xargs kill -9 &
 
 rm celerybeat.pid &
 
-echo $(ls -la | grep 'pid')
-
 echo "<<<<<<<< celery down >>>>>>>>>"
 
 echo "<<<<<<<< stop redis >>>>>>>>>"
@@ -21,7 +19,7 @@ redis-cli shutdown &
 
 echo "<<<<<<<< redis down >>>>>>>>>"
 
-echo "<<<<<<<< stop flask redis >>>>>>>>>"
+echo "<<<<<<<< stop flask >>>>>>>>>"
 
 ps auxww | grep 'flask' | awk '{print $2}' | xargs kill -9
 
