@@ -3,12 +3,19 @@
 # Third-party libraries
 import pytest
 from flask import current_app, Response, template_rendered
+from unittest.mock import Mock
 
 # Local imports
 from main import create_app
 from tracker.storage import DataStore
+from tracker.utils import Util
 
-# constants
+from tracker.celery_conf.tasks import (
+    get_daily_activity,
+    get_daily_logged_time, 
+    get_daily_projects, send_email
+)
+
 from config import app_config
 
 @pytest.yield_fixture(scope='session')
@@ -47,3 +54,21 @@ def captured_templates(test_app):
         yield recorded
     finally:
         template_rendered.disconnect(record, test_app)
+
+@pytest.fixture(scope='function')
+def mock_write_to_file(monkeypatch):
+    monkeypatch.setattr(
+        Util, 'write_to_file',
+        lambda x,y: None)
+
+@pytest.fixture(scope='function')
+def mock_get_daily_projects(monkeypatch):
+    monkeypatch.setattr(
+        get_daily_projects, 'delay',
+        lambda : None)
+
+@pytest.fixture(scope='function')
+def mock_get_daily_activity(monkeypatch):
+    monkeypatch.setattr(
+        get_daily_activity, 'delay',
+        lambda : None)

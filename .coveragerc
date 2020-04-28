@@ -2,4 +2,4 @@
 show_missing = True
 omit =
     tracker/logs/*
-    tracker/celery_conf/*
+    tracker/celery_conf/celery_periodic_scheduler
